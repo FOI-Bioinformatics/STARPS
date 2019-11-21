@@ -10,7 +10,7 @@ To compile the C code, the [Gnu Scientific Library](https://www.gnu.org/software
 gcc -o WrightFisher_call WrightFisher_call.c -Wall -I/usr/include -lm -lgsl -lgslcblas
 ```
 ### Running a simulation 
-The file [WrightFisher_call.c](src/WrightFisher_call.c) is called within the R environment: 
+The file [WrightFisher_call.c](src/WrightFisher_call.c) is called within the R environment using [WFwrapper_call.c](src/WFwrapper_call.c): 
 
 
 ```
