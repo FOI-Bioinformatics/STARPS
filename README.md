@@ -10,13 +10,26 @@ To compile the C code, the [Gnu Scientific Library](https://www.gnu.org/software
 gcc -o WrightFisher_call WrightFisher_call.c -Wall -I/usr/include -lm -lgsl -lgslcblas
 ```
 ### Running a simulation 
-The file [WrightFisher_call.c](src/WrightFisher_call.c) is called within the R environment, 
+The file [WrightFisher_call.c](src/WrightFisher_call.c) is called within the R environment: 
 
 
 ...
 source("/mnt/powervault/jonhall/Desktop/Forensics/STARPS/R/WFwrapper_call.R")
+source("/mnt/powervault/jonhall/Desktop/Forensics/STARPS/R/draweff.R")
+cat(sprintf('Generate fitness effects...\n'))
+fitn.eff <- draweff(size = tsize)
+cat(sprintf('Generate an initial population...\n'))
+initPop<-matrix(0,2,4)
 
-init.pop<-WFwrapper(nGen=nGen, 
+initPop[1:2,4]<-1
+initPop[1,3]<-0.999
+initPop[2,3]<-0.001
+initPop[2,2]<-1
+initPop[2,1]<-1
+colnames(initPop)<-c("clone",157321,"frequency","fitness")
+
+cat(sprintf('Start a cultivation...\n'))
+init.pop <- WFwrapper(nGen=nGen, 
       popsize=popsize, 
       expfactor=expfactor, 
       mutrate=mutrate, 
@@ -33,7 +46,6 @@ init.pop<-WFwrapper(nGen=nGen,
 ...
 
 The input to WFwrapper_call.R is
-- Input wrapper file for the Wright-Fisher simulation program STARPS
 - nGen is number of generations per passage                                       
 - popsize is the initial population size
 - expfact is the expansion factor for bacterial growth
