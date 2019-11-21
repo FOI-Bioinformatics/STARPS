@@ -1,4 +1,4 @@
-WFwrapper<-function(nGen=1000,popsize=1000,expfactor=2,mutrate=5e-10,size=1800000,verbosity=1,p1=0.4,p2=0.5,mu=0.1,initPop,thresn=0.0001,thresf=0.000001,marker=1,fitn.eff=NULL,flag=0,simple=0)
+WFwrapper<-function(nGen=1000,popsize=1000,expfactor=2,mutrate=5e-10,size=1800000,verbosity=1,p1=0.4,p2=0.5,mu=0.1,initPop,thresn=0.0001,thresf=0.000001,marker=1,fitn.eff=NULL,flag=0,simple=0,path)
 {
 # Input wrapper file for the Wright-Fisher simulation program STARPS
 # nGen is number of generations per passage                                       
@@ -43,15 +43,15 @@ WFwrapper<-function(nGen=1000,popsize=1000,expfactor=2,mutrate=5e-10,size=180000
   if(marker==1){
     cat(sprintf('Biallelic markers considered\n'))
     if(simple==0)
-      dyn.load(file.path("/mnt/powervault/jonhall/Desktop/Forensics/STARPS/",paste("WrightFisher_call",.Platform$dynlib.ext,sep="")))		
+      dyn.load(file.path(paste(path,"WrightFisher_call",.Platform$dynlib.ext,sep="")))		
     else
-      dyn.load(file.path("/mnt/powervault/jonhall/Desktop/Forensics/STARPS/",paste("WrightFisher_call_simple",.Platform$dynlib.ext,sep="")))
+      dyn.load(file.path(paste(path,"WrightFisher_call_simple",.Platform$dynlib.ext,sep="")))
     outX<-.Call("WF2",nGen,popsize,expfactor,mutrate,nloci,verbosity,nGenotype,flag,initPop2,pos,thresn,thresf,fitn.eff)
   }
   else{
     cat(sprintf('Multiallelic markers considered\n'))
     cat(sprintf('nloci = %d\n',nloci))
-    dyn.load(file.path("/mnt/powervault/jonhall/Desktop/Forensics/STARPS/",paste("WrightFisher_call_VNTR",.Platform$dynlib.ext,sep="")))
+    dyn.load(file.path(paste(path,"WrightFisher_call_VNTR",.Platform$dynlib.ext,sep="")))
     outX<-.Call("WF_VNTR",nGen,popsize,expfactor,mutrate,nloci,verbosity,nGenotype,flag,initPop2,pos,thresn,thresf)
   }
 #SEXP WF_VNTR(SEXP nGenp, SEXP popsizep, SEXP expfactorp, SEXP mutratep, SEXP nlocip, SEXP verbosityp, SEXP nGenotypep, SEXP flagp, SEXP inXp, SEXP posp, SEXP thresp, SEXP thresfrp, SEXP sizep)
