@@ -13,7 +13,7 @@ gcc -o WrightFisher_call WrightFisher_call.c -Wall -I/usr/include -lm -lgsl -lgs
 The file [WrightFisher_call.c](src/WrightFisher_call.c) is called within the R environment: 
 
 
-...
+```
 source("/mnt/powervault/jonhall/Desktop/Forensics/STARPS/R/WFwrapper_call.R")
 source("/mnt/powervault/jonhall/Desktop/Forensics/STARPS/R/draweff.R")
 cat(sprintf('Generate fitness effects...\n'))
@@ -43,7 +43,7 @@ init.pop <- WFwrapper(nGen=nGen,
       marker=marker, 
       fitn.eff=fitn.eff, 
       simple=simple)
-...
+```
 
 The input to WFwrapper_call.R is
 - nGen is number of generations per passage                                       
